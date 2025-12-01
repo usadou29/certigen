@@ -32,6 +32,11 @@
      - Script `scripts/seedFormations.ts` pour insérer les 26 formations fournies (ajouté/ exécuté avec les identifiants Supabase fournis).
      - Tests à venir : couverture Jest/Supertest pour les services + endpoints une fois qu’un environnement Supabase de test sera disponible.
   3. Implémenter l’endpoint OCR (`POST /api/ocr/attendance`) avec Tesseract et gestion du multipart.
+     - 3.1 Choisir et installer la librairie OCR (`tesseract.js` ou équivalent) et `multer` pour recevoir le PDF en multipart. *(terminée)*  
+        - Ajout de `tesseract.js` et `multer` à `backend/package.json` pour extraire du texte depuis les PDFs et gérer les uploads multipart.
+     - 3.2 Écrire un service OCR qui accepte un buffer PDF, appelle Tesseract (langue FR/EN) et normalise les lignes en `{ firstName, lastName }`. *(à venir)*  
+     - 3.3 Ajouter la route `POST /api/ocr/attendance` avec middleware multipart + validation minimale, puis renvoyer le tableau JSON. *(à venir)*  
+     - 3.4 Couvrir la logique par des tests unitaires (mock Tesseract) et une intégration Supertest qui simule l’upload d’un PDF. *(à venir)*  
   4. Écrire les tests unitaires pour la logique formations + OCR et les tests d’intégration (Supertest). *(débutés)*  
      - Ajout de Jest/ts-jest, Supertest, cross-env et configuration `jest.config.ts` pour les tests backend.  
      - Scripts : `npm run test` lance `cross-env NODE_ENV=test jest --passWithNoTests`.  
