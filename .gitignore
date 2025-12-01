@@ -9,3 +9,4 @@ backend/dist/
 npm-debug.log*
 # Env
 .env
+.private
