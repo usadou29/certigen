@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 
 import { supabase } from './lib/supabaseClient';
+import formationRoutes from './routes/formations.routes';
 
 const app = express();
 
@@ -22,10 +23,13 @@ app.get(`${baseRoute}/supabase/health`, async (_req, res) => {
   return res.status(200).json({ status: 'ok', message: 'Supabase ready' });
 });
 
+app.use(`${baseRoute}/formations`, formationRoutes);
+
 const port = Number(process.env.PORT ?? 4000);
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(port, () => {
+    // eslint-disable-next-line no-console
     console.log(`certiGen backend lancé sur http://localhost:${port}`);
   });
 }

@@ -22,12 +22,20 @@
 - Micro-étapes :
   1. Initialiser TypeScript, Express, Supabase client et tooling (lint, scripts, dotenv) dans `backend/`. *(terminée)*  
      - Configuration du compilateur TypeScript (`tsconfig.json`) et scripts `dev/build/start`.
-     - Ajout d’ESLint (+ ignore), de `ts-node-dev`, et d’un `.env.example` qui liste `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `PORT`.
+     - Ajout d’ESLint flat config, de `ts-node-dev`, et d’un `.env.example` qui liste `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `PORT`.
      - Création d’un server Express minimal (`src/server.ts`), d’un helper d’environnement (`src/config/env.ts`) et d’un client Supabase (`src/lib/supabaseClient.ts`).
      - Route `GET /api/health` et `/api/supabase/health` pour vérifier que l’API répond et que Supabase est joignable même sans tables (futur).
-  2. Concevoir la couche `formations` (modèle Supabase + services CRUD) et ajouter les migrations/SQL.
+  2. Concevoir la couche `formations` (modèle Supabase + services CRUD) et ajouter les migrations/SQL. *(terminée)*  
+     - Migration SQL `sql/migrations/001_create_formations_table.sql` avec table `formations` et champs attendus (UUID, dates, description, compétences).
+     - Typage partagé (`src/models/formation.ts`) et services supabase (CRUD avec mapping camelCase/snake_case).
+     - Router `src/routes/formations.routes.ts` exposant GET/POST/PUT/DELETE + validation minimale et ajout au serveur (`server.ts`).
+     - Script `scripts/seedFormations.ts` pour insérer les 26 formations fournies (ajouté/ exécuté avec les identifiants Supabase fournis).
+     - Tests à venir : couverture Jest/Supertest pour les services + endpoints une fois qu’un environnement Supabase de test sera disponible.
   3. Implémenter l’endpoint OCR (`POST /api/ocr/attendance`) avec Tesseract et gestion du multipart.
-  4. Écrire les tests unitaires pour la logique formations + OCR et les tests d’intégration (Supertest).
+  4. Écrire les tests unitaires pour la logique formations + OCR et les tests d’intégration (Supertest). *(débutés)*  
+     - Ajout de Jest/ts-jest, Supertest, cross-env et configuration `jest.config.ts` pour les tests backend.  
+     - Scripts : `npm run test` lance `cross-env NODE_ENV=test jest --passWithNoTests`.  
+     - Couverture initiale : `tests/formations.routes.test.ts` vérifie `GET /api/formations`, `GET /api/formations/:id`, `POST /api/formations`, `PUT /api/formations/:id` et `DELETE /api/formations/:id` via Supertest avec services mockés.
 - Tests associés : aucun encore, tests prévus pour chaque micro-étape dès qu’une logique métier est ajoutée.  
 - TODO/questions ouvertes : définir les modèles `formations`, les migrations Supabase, paramétrer Tesseract et planifier les suites de tests (Jest + Supertest).
 
