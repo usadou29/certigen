@@ -13,8 +13,6 @@ type FormationRow = {
 
 const columns = ['id', 'name', 'description', 'skills_description', 'start_date', 'end_date'];
 
-const asString = (value: string | null | undefined): string => (value === undefined || value === null ? '' : value);
-
 const mapFromDb = (row: FormationRow): Formation => ({
   id: row.id,
   name: row.name,
